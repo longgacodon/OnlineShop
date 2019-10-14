@@ -1,0 +1,174 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Elecream - Trang chủ{% endblock %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-lg-3">
+
+      <h1 class="my-4"></h1>
+          <div class="list-group">
+            <a {% if not category %}
+              class="list-group-item active"
+            {% endif %}
+              href="{% url 'product:product_list' %}" style="text-align:center"><b>Danh sách sản phẩm</b></a>
+
+          {% for c in categories %}
+            <a {% if category.id == c.id %}
+              class="list-group-item active"
+            {% endif %}
+              href="{{ c.get_absolute_url }}" style="text-align:center"><b>{{ c.name }}</b></a>
+          {% endfor %}
+          </div>
+
+    </div>
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-9">
+
+      <div id="Indicators" class="carousel slide my-4" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#Indicators" data-slide-to="0" class="active"></li>
+          <li data-target="#Indicators" data-slide-to="1"></li>
+          <li data-target="#Indicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="carousel-item active">
+            <img class="d-block img-fluid" src="{% static 'images/products/home-top-TV-LG.jpg' %}" alt="First slide">
+              <div class="text"></div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block img-fluid" src="{% static 'images/products/maygiat.jpg' %}" alt="Second slide">
+              <div class="text"></div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block img-fluid" src="{% static 'images/products/Note10S10-928x.jpg' %}" alt="Third slide">
+              <div class="text"></div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#Indicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+        <a class="carousel-control-next" href="#Indicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only" style="background-color:#0D1A26"></span>
+        </a>
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{% static 'images/python-icon.png' %}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Sản phẩm 1</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">Vào giữa thế kỉ XIX, phong trào đấu tranh của giai cấp công nhân phát triển mạnh,</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{% static 'images/OU-logo.png' %}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Sản phẩm 2</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">đặt ra yêu cầu bức thiết phải có hệ thống lý luận khoa học với tư cách là vũ khí tư tưởng của giai cấp công nhân trong cuộc đấu tranh chống chủ nghĩa tư bản.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{% static 'images/Farewell.jpg' %}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Sản phẩm 3</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">Trong hoàn cảnh đó, chủ nghĩa Mác ra đời, về sau được Lênin phát triển trở thành chủ nghĩa Mác - Lê nin.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{% static 'images/OU-logo.png' %}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Sản phẩm 4</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">Chủ nghĩa Mác - Lê nin chỉ rõ, muốn giành được thắng lợi trong cuộc đấu tranh thực hiện sứ mệnh lịch sử của mình, giai cấp công nhân phải lập ra đảng cộng sản.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{% static 'images/python-icon.png' %}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Sảnphẩm 5</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">Chủ nghĩa Mác - Lê nin chỉ rõ, muốn giành được thắng lợi trong cuộc đấu tranh thực hiện sứ mệnh lịch sử của mình, giai cấp công nhân phải lập ra đảng cộng sản.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{% static 'images/Farewell.jpg' %}" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Sản phẩm 6</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">Tuyên ngôn của Đảng cộng sản (1848) xác định: những người cộng sản luôn luôn đại biểu cho lợi ích của toàn bộ phong trào.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.col-lg-9 -->
+
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+      
+{% endblock %}

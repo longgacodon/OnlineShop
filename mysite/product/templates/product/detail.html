@@ -1,0 +1,63 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}
+	Elecream - {{ product.name }}
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+
+			<div class="col-lg-9 col-xl-9 offset-xl-2">
+				<div class="card mt-4">
+					<img class="card-img-top img-fluid" src="
+						{% if product.image %}
+							{{ product.image.url }}
+						{% else %}
+							{% static 'images/no_image.png' %}
+						{% endif %}">
+					<div class="card-body overflow-auto">
+						<h3 class="card-title">{{ product.name }}</h3>
+						<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+						4.0/5.0
+						<h2><a href="{{ product.category.get_absolute_url }}">Danh mục: {{ product.category}}</a></h2>
+						<h4>{{ product.price }}đ</h4>
+						<p class="card-text">
+							{{ product.description|linebreaks }}</p>
+					
+						<form action="{% url 'cart:cart_add' product.id %}" method="post">
+							{{ cart_product_form }}
+							{% csrf_token %}
+							<div class="ml-auto ">
+			              		<span>
+			              			<button class="btn btn-lg btn-outline-primary" type="submit">
+			              				Thêm vào giỏ hàng
+			              			</button>
+			              		</span>
+			            	</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="card card-outline-secondary my-4">
+		        	<div class="card-header">
+		          		Đánh giá
+		        	</div>
+			        <div class="card-body">
+			          <p>Trong hoàn cảnh đó, chủ nghĩa Mác ra đời, về sau được Lênin phát triển trở thành chủ nghĩa Mác - Lê nin.</p>
+			          <small class="text-muted">Gửi bởi Anonymous vào 03/01/2019</small>
+			          <hr>
+			          <p>Chủ nghĩa Mác - Lê nin chỉ rõ, muốn giành được thắng lợi trong cuộc đấu tranh thực hiện sứ mệnh lịch sử của mình, giai cấp công nhân phải lập ra đảng cộng sản.</p>
+			          <small class="text-muted">Gửi bởi Anonymous vào 05/01/2019</small>
+			          <hr>
+			          <p>Chủ nghĩa Mác - Lê nin chỉ rõ, muốn giành được thắng lợi trong cuộc đấu tranh thực hiện sứ mệnh lịch sử của mình, giai cấp công nhân phải lập ra đảng cộng sản. Tuyên ngôn của Đảng cộng sản (1848) xác định: những người cộng sản luôn luôn đại biểu cho lợi ích của toàn bộ phong trào.</p>
+			          <small class="text-muted">Gửi bởi Anonymous vào 09/02/2019</small>
+			          <hr>
+			          <a href="#" class="btn btn-success">Đánh giá sản phẩm.</a>
+			        </div>
+			    </div>
+		    </div>
+		</div>
+	</div>
+{% endblock %}
