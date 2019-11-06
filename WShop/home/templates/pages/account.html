@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Tài khoản{% endblock %}
+
+{% block content %}
+	<br><br>
+	<div class="container">
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<div class="profile-userpic">
+					{{request.profile.photo}}
+				</div>
+				<div class="profile-usertitle">
+          <div class="profile-usertitle-job">
+            {{request.user.first_name}}
+          </div>
+					<div class="profile-usertitle-name">
+						Username: {{request.user.username}}
+					</div>
+				</div>
+			</div> <br>
+            <div class="list-group ">
+              <a href="{% url 'account' %}" class="list-group-item list-group-item-action active">Thông tin tài khoản</a>
+              <a href="{% url 'password_change' %}" class="list-group-item list-group-item-action">Đổi Mật Khẩu</a>
+              </div> 
+		</div>
+		<div class="col-md-9">
+		    <div class="card">
+		        <div class="card-body">
+		            <div class="row">
+		                <div class="col-md-12">
+		                    <h4>Thông tin tài khoản</h4>
+		                    <hr>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-md-12">
+		                    <form action="." method="post">
+                          	{{ user_form.as_p }}
+							{{ profile_form.as_p }}
+							{% csrf_token %}
+                             
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                  <button name="submit" type="submit" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                              </div>
+                            </form>
+		                </div>
+		            </div>
+		            
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
+{% endblock %}
