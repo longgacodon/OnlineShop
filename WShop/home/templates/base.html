@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <meta name="description" content="elecream.com">
+    <meta name="author" content="LLRMK">
+
+    <title>Elecream - {% block title %}{% endblock title %}</title>
+    <link rel="icon" href="{% static 'images/logos/favicon.ico' %}">
+  
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/shop-homepage.css' %}" rel="stylesheet">
+    <link href="{% static 'css/shop-cart.css' %}" rel="stylesheet">
+    <link href="{% static 'css/shop.css' %}" rel="stylesheet">
+    <link href="{% static 'css/shop-login.css' %}" rel="stylesheet">
+    
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+    {% block stylesheet %}{% endblock stylesheet %}
+</head>
+
+<body>  
+    <!-- Navigation bar-->
+    {% if messages %}
+    <br><br>
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message|safe }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#0D1A26">
+        <div class="container">
+            <a class="navbar-brand" href="/" ><input type="image" src="{% static 'images/logos/LongLogo-Lite.png' %}" height="35px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li>
+                        <div class="gadget">
+                            <form method="get" id="search" action="#">
+                                <div class="input-group mb">
+                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm cần tìm..." aria-label="Recipient's username" aria-describedby="button-addon2" size="59">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light" type="button" id="button-addon2">
+                                            Tìm kiếm
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <a class="btn btn-success btn-sm ml-3" href="/cart">
+                    	<div>	
+                        <i class="fa fa-shopping-cart" style="margin:auto"></i>
+                        <span class="badge badge-light">
+                            {% with total_items=cart|length %}
+                                {{ total_items }}
+                            {% endwith %}
+                         </span>
+                        </div>
+                     </a>                                      
+                    <li class="nav-item">
+                        <form class="form-inline">
+                            {% if request.user.is_authenticated %}
+                                <div class="nav-link" style="color:orange">
+                                {% if request.user.is_superuser %}
+                                Chào <strong> <a style="color:yellow">{{request.user.username}}</a></strong>
+                                {% else %}
+                                Chào <strong> <a href='/account' style="color:yellow">{{request.user.first_name}}</a></strong>
+                                {% endif %}
+<!--                             <div class="smallfont"  style="color:orange">{{request.user.last_login}}</div>  -->
+                                </div>
+                                <a href="{% url 'logout' %}" class="nav-link" role="button" style="color: white" aria-pressed="true">Đăng xuất</a>
+
+                            {% else %}
+                                <a class="nav-link" href="/register" style="color: white">Đăng ký</a>
+                                <a href="/login" class="nav-link" role="button" style="color: white" aria-pressed="true">       Đăng nhập</a>
+                            {% endif %}
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    
+    {% endblock %}
+    <!-- Footer -->
+    <footer class="text-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-lg-4 col-xl-3">
+                <h5>Thông tin</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <p class="mb-0">
+                    Dự án web bán điện gia dụng trực tuyến (BT lớn) <br>
+                    Python 3.7.2 <br>
+                    Django 2.2.6(WebFramwork) <br> 
+                    Sinh viên khoa CNTT trường đại học Mở Thành phố Hồ Chí Minh.
+                </p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                <h5>Thông tin thêm</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><a href="http://ou.edu.vn/">Đại học mở</a></li>
+                    <li><a href="http://it.ou.edu.vn/">CNTT ĐH Mở</a></li>
+                    <li><a href="/product">[Product]</a></li>
+                    <li><a href="/admin">[Manage]</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto">
+                <h5>Liên kết hữu ích</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><a href="https://github.com">Github</a></li>
+                    <li><a href="https://stackoverflow.com/">StackOverflow</a></li>
+                    <li><a href="https://forums.voz.vn/">Vozforums</a></li>
+                    <li><a href="https://www.twitch.tv/">TwitchTV</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3">
+                <h5>Liên hệ</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-home mr-2"></i>Elecream.com</li>
+                    <li><i class="fa fa-envelope mr-2"></i> LLRMK@elecream.com</li>
+                    <li><i class="fa fa-phone mr-2"></i> +84334567880 </li>
+                    <li><i class="fa fa-print mr-2"></i> +334567890</li>
+                </ul>
+            </div>
+            <div class="col-12 copyright mt-3">
+                <p class="float-left">
+                    <a href="#"><b>Đầu trang</b></a>
+                </p>
+                <p class="text-right text-muted">Created &copy; on <a href="https://www.python.org/"><i>Python</i></a> | <span>v. 3.7.2</span></p>
+            </div>
+        </div>
+    </div>
+    </footer>
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+
+			<div class="col-lg-9 col-xl-9 offset-xl-2">
+				<div class="card mt-4">
+					<img class="card-img-top img-fluid" src="
+						{% if product.image %}
+							{{ product.image.url }}
+						{% else %}
+							{% static 'images/no_image.png' %}
+						{% endif %}">
+					<div class="card-body overflow-auto">
+						<h3 class="card-title">{{ product.name }}</h3>
+						<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+						4.0/5.0
+						<h2><a href="{{ product.category.get_absolute_url }}">Danh mục: {{ product.category}}</a></h2>
+						<h4>{{ product.price }}đ</h4>
+						<p class="card-text">
+							{{ product.description|linebreaks }}</p>
+					
+						<form action="{% url 'cart:cart_add' product.id %}" method="post">
+							{{ cart_product_form }}
+							{% csrf_token %}
+							<div class="ml-auto ">
+			              		<span>
+			              			<button class="btn btn-lg btn-outline-primary" type="submit">
+			              				Thêm vào giỏ hàng
+			              			</button>
+			              		</span>
+			            	</div>
+						</form>
+					</div>
+				</div>
+		    </div>
+		</div>
+	</div>
+{% endblock %}

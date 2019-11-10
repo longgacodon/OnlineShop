@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Giỏ hàng{% endblock %}
+
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+    	<br><br><br>
+        <h1 class="jumbotron-heading">GIỎ HÀNG</h1>
+     </div>
+</section>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col" class="text-center">Đơn giá</th>
+                            <th scope="col" class="text-right">Tổng</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div class="cart">
+
+                        {% for item in cart %}
+                          {% with product=item.product %}
+                            <tr>
+                                <td>
+                                    <a href="{{ product.get_absolute_url }}">
+                                    <img src="
+                                        {% if product.image %}
+                                            {{ product.image.url }}
+                                        {% else %}
+                                            {% static 'images/no_image.png' %}
+                                        {% endif %}" height="50px"></a>
+                                </td>
+                                <td>{{ product.name }}</td>
+                                <td>
+                                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                        {{ item.update_quantity_form.quantity }}
+                                        {{ item.update_quantity_form.update }}
+                                        <input type="submit" value="Cập nhật">
+                                        {% csrf_token %}
+                                    </form>
+
+                                </td>
+                                <td class="text-right">{{ item.price }} đ</td>
+                                <td class="text-right">{{ item.total_price }} đ</td>
+                                <td class="text-right">
+                                    <a href="{% url 'cart:cart_remove' product.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                          {% endwith %}
+                        {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Tổng giá trị đơn hàng</td>
+                                {% if cart.coupon %}
+                                <tr class="subtotal">
+                                    <td>Subtotal</td>
+                                    <td colspan="4"></td>
+                                    <td class="num">{{ cart.get_total_price}} đ</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        "{{ cart.coupon.code }}" coupon
+                                        ({{ cart.coupon.discount }}% off)
+                                    </td>
+                                    <td colspan="4"></td>
+                                    <td class="num neg">
+                                        - {{ cart.get_discount|floatformat:"0"  }} đ
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                <td class="text-right"> 
+                                    {{ cart.get_total_price_after_discount}} đ
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p>Apply a coupon:</p>
+        <form action="{% url 'coupon:apply' %}" method="post">
+             {{ coupon_apply_form }}
+            <input type="submit" value="Apply">
+            {% csrf_token %}
+        </form>
+
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <a href="{% url 'product:product_list' %}" class="btn btn-block btn-light">Tiếp tục mua hàng</a>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <a href="{% url 'order:order_create' %}" class="btn btn-lg btn-block btn-success text-uppercase">Thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
