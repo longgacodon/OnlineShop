@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Đăng ký{% endblock %}
+
+{% block content %}
+    <div class="wrapper" style="background-color:#D8EDF2">
+        <form class="form-signin" method="post">
+            <h2 class="form-signin-heading text-lg-center">ĐĂNG KÝ</h2>   
+
+            {% csrf_token %}
+            {% for key, value in user_form.errors.items %}
+              {{value}}
+            {% endfor %}
+
+            {% for field in user_form %}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field |attr:"class:form-control" }}             
+            {% endfor %} 
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me" id="policy" name="policy" required> Tôi đồng ý với <a href="{% url 'policy' %}" style="color:blue"> điều khoản và chính sách bảo mật </a> của Elecream
+            </label>
+            <br> <button class="btn btn-lg btn-primary btn-block" type="submit">Đăng ký</button>
+            <input type="hidden" name="next" value="/"/>
+            <br>
+            <p>Đã có tài khoản? <b href="/login" style="color:blue">Đăng nhập</b></p>
+        </form>
+    </div>
+{% endblock %}

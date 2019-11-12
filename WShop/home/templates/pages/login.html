@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block content %}
+    <div class="wrapper" style="background-color:#D8EDF2">
+      <form class="form-signin" method="post">
+        <h2 class="form-signin-heading text-lg-center">ĐĂNG NHẬP</h2>  
+        {% csrf_token %}
+        {% for key, value in form.errors.items %}
+          {{ value }}
+        {% endfor %}
+
+        {% for field in form %}
+    			<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field |attr:"class:form-control" }}  
+    	{% endfor %} 
+        <p><a href="{% url 'password_reset' %}" style="color:blue">Quên mật khẩu?</a></p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Đăng nhập</button>
+        <input type="hidden" name="next" value="/"/>  
+        <br>      
+        <p>Chưa có tài khoản? <a href="/register" style="color:blue"><b>Đăng ký</b></a></p>
+      </form>
+    </div>
+{% endblock %}

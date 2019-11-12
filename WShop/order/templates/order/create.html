@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Thanh toán{% endblock %}
+
+{% block content %}
+	<div class="overflow-auto container col-md-7">
+		<div class="col-md-6 container bg-default float-left">
+        	<br><br><br><br>
+			<h2>
+					Đơn hàng của bạn
+			</h2>
+            <hr>
+			<ul>
+				{% for item in cart %}
+					<li>
+						{{ item.quantity }}x {{ item.product.name }}
+						<span>{{ item.total_price }} đ</span>
+					</li>
+				{% endfor %}
+				{% if cart.coupon %}
+					<li>
+						"{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+						<span>- {{ cart.get_discount|floatformat:"0" }} đ</span>
+					</li>
+				{% endif %}
+			</ul>
+			<p>Tổng: {{ cart.get_total_price_after_discount|floatformat:"0"  }} đ</p>
+			<form action="." method="post" class="order-form">
+				{% for key, value in form.errors.items %}
+		          Tên tài khoản hoặc mật khẩu không chính xác. Xin kiểm tra CAPSLOCK. <br><br>
+		        {% endfor %}
+					<div class="form-group">
+						{% for field in form %}
+							
+								<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+						            {{ field |attr:"class:form-control" }} 
+				
+						{% endfor %}
+					</div>
+				<p><input type="submit" class="btn btn-outline-dark" value="Thanh toán"></p>
+				{% csrf_token %}		
+			</form>
+            <br>
+		</div> 
+	</div>
+{% endblock %}

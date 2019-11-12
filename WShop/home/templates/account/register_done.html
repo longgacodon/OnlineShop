@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Chào mừng{% endblock %}
+
+{% block content %}
+    <div class="wrapper" style="background-color:#D8EDF2">
+        <form class="form-signin" method="post">
+            <h2 class="form-signin-heading text-lg-center">ĐĂNG KÝ</h2>   
+            <h1>Xin chào {{ new_user.first_name }}!</h1>
+			<p>Bạn đã đăng ký tài khoản thành công, bạn có thể <a href="{% url 'login' %}"><u>đăng nhập</u></a>.</p>
+        </form>
+    </div>
+{% endblock %}

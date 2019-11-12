@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Thanh toán thành công{% endblock %}
+
+{% block content %}
+	<div class="wrapper" style="background-color:#D8EDF2">
+        <form class="form-signin" method="post">
+            <h2 class="form-signin-heading text-lg-center">Cảm ơn</h2>   
+			<p>Bạn đã đặt hàng thành công. Mã số hoá đơn của bạn là
+	<strong>{{ order.id }}</strong>.</p>
+			<p>Trở về <a href="/"><u>trang chủ</u></a>.</p>
+		</form>
+	</div>
+{% endblock %}
