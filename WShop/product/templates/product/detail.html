@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+
+			<div class="col-lg-9 col-xl-9 offset-xl-2">
+				<div class="card mt-4">
+					<img class="card-img-top img-fluid" src="
+						{% if product.image %}
+							{{ product.image.url }}
+						{% else %}
+							{% static 'images/no_image.png' %}
+						{% endif %}">
+					<div class="card-body overflow-auto">
+						<h3 class="card-title">{{ product.name }}</h3>
+						<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+						4.0/5.0
+						<h2><a href="{{ product.category.get_absolute_url }}">Danh mục: {{ product.category}}</a></h2>
+						<h4>{{ product.price }}đ</h4>
+						<p class="card-text">
+							{{ product.description|linebreaks }}</p>
+					
+						<form action="{% url 'cart:cart_add' product.id %}" method="post">
+							{{ cart_product_form }}
+							{% csrf_token %}
+							<div class="ml-auto ">
+			              		<span>
+			              			<button class="btn btn-lg btn-outline-primary" type="submit">
+			              				Thêm vào giỏ hàng
+			              			</button>
+			              		</span>
+			            	</div>
+						</form>
+						<br>
+						<div class="card-header">
+				        	Thông tin sản phẩm
+				        </div>	
+
+						<div class="card-body col-md-6 float-left">
+				            <p>{{ product.description|linebreaks }}</p>
+				        </div>
+				          
+				        <div class="card-body col-md-6 float-right">
+				            <p>{{ product.description2|linebreaks }}</p>
+				        </div>
+					</div>
+					<br><br>
+					<div class="card card-outline-secondary my-4">
+			        	{% with reviews.count as total_reviews %}
+							<div class="card-header">
+								<h3> Có {{ total_reviews }} đánh giá cho sản phẩm này. </h3>
+							</div>
+						{% endwith %}
+
+				        <div class="card-body">
+				        	{% for review in reviews %}
+								<div class="review">
+									<small class="text-muted">
+										Đánh giá {{ forloop.counter }} bởi {{ review.name }}
+										{{ review.created }}
+									</small>
+								<p> {{ review.body|linebreaks }} </p>
+								<hr>
+								</div>
+							{% empty %}
+								<p>Chưa có đánh giá nào trên sản phẩm này.</p>
+							{% endfor %}
+				        </div>
+
+				        <br>
+						{% if new_review %}
+							<h2>Gửi đánh giá thành công.</h2>
+						{% else %}
+							<form action="." method="post">
+								{{ review_form.as_p }}
+								{% csrf_token %}
+								<p><input type="submit" class="btn btn-success" value="Thêm đánh giá"></p>
+							</form>
+						{% endif %}
+					</div>
+				</div>
+		    </div>
+		</div>
+	</div>
+{% endblock %}

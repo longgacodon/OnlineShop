@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Tìm kiếm{% endblock %}
+
+{% block content %}
+		<div class="container">
+			<div class="row">
+			    <div class="col-lg-3">
+			    	<h1 class="my-4"></h1>
+				    <div class="list-group">
+				    	<form class="form-signin">
+				    		<h5 class="form-signin-heading text-lg-center" >
+				    			Tìm kiếm <br> 
+				    			{% if query %} "{{ query }}" {% endif %}
+				    		</h5>
+				    		<hr>
+				    		<form action="." method="get">
+									{{ search_form.as_p }}
+									<input type="submit" class="btn btn-outline-dark" value="Tìm kiếm"> 
+							<hr>
+					    	{% with results.count as total_results %}
+								Tìm thấy {{ total_results }} kết quả.
+							{% endwith %}
+							</form>
+						</form>
+						<br> 
+				    </div>
+			    </div>
+
+				<div class="col-lg-9">
+					<div id="Indicator" class="carousel slide my-4" data-ride="carousel">
+						
+				    </div>
+					<div class="row">
+						{% for product in results %}
+							<div class="col-lg-4 col-md-6 mb-4">
+								<div class="card h-100">
+									<a href="{{ product.get_absolute_url }}">
+										<img class="card-img-top" src="
+										{% if product.image %}
+											{{ product.image.url }}
+										{% else %}
+											{% static 'image/no_image.png' %}
+										{% endif %}	">
+									</a>
+									<div class="card-body">
+										<h4 class="card-title">
+											<a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+										</h4>
+										<h5>
+											{{ product.price}} đ
+										</h5>
+									</div>
+									<div class="card-footer">
+						      			<small class="text-muted">
+						      				&#9733; &#9733; &#9733; &#9733; &#9734;
+						      			</small>
+						            </div>
+					            </div>
+					       	</div>
+						{% empty %}
+							<p>*Không tìm thấy kết quả nào.</p>
+						{% endfor %}
+					</div>	
+				</div>
+			</div>
+		</div>
+{% endblock %}
